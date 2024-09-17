@@ -2,8 +2,12 @@ package main
 
 import (
 	"errors"
+	"os"
 	"slices"
+	"strconv"
 	"time"
+
+	"github.com/aquasecurity/table"
 )
 
 type Todo struct {
@@ -77,4 +81,32 @@ func (todos *Todos) validateIndex(idx int) error {
 	}
 
 	return nil
+}
+
+func (todos *Todos) print() {
+	t := table.New(os.Stdout)
+	t.SetRowLines(false)
+
+	t.SetHeaders("ID", "Title", "Completed", "Created At", "Completed At")
+
+	for idx, todo := range *todos {
+		isCompleted := "❌"
+		if todo.IsCompleted {
+			isCompleted = "✅"
+		}
+		completedAt := "--"
+		if todo.CompletedAt != nil {
+			completedAt = todo.CompletedAt.Format(time.RFC1123)
+		}
+
+		t.AddRow(
+			strconv.Itoa(idx + 1), 
+			todo.Title, 
+			isCompleted, 
+			todo.CreatedAt.Format(time.RFC1123), 
+			completedAt,
+		)
+	}
+
+	t.Render()
 }
