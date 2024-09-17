@@ -11,10 +11,10 @@ import (
 )
 
 type Todo struct {
-	Title string
-	CreatedAt time.Time
-	CompletedAt *time.Time
-	IsCompleted bool
+	Title string `json:"title"`
+	CreatedAt time.Time `json:"created_at"`
+	CompletedAt *time.Time `json:"completed_at"`
+	IsCompleted bool `json:"is_completed"`
 }
 
 type Todos []Todo
