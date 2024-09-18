@@ -1,13 +1,11 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+
+*/
 package main
 
+import "www.github.com/heyyayesh/todo-cli/cmd"
+
 func main() {
-	storage := NewStorage[Todos]("todos.json")
-	todos := Todos{}
-	storage.Load(&todos)
-
-	todos.toggle(0)
-	todos.delete(7)
-
-	todos.print()
-	storage.Save(todos)
+	cmd.Execute()
 }
